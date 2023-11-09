@@ -310,12 +310,14 @@ createApp({
       return Array.from(flightSet);
     });
 
-    const filteredFligths = (category) => {
-      if (category == -1) {
+    const filteredFligths = computed(() => {
+      if (selectedTicketClass.value == -1) {
         return flightReservations.value;
       }
-      return flightReservations.value.filter((f) => f.ticketClass === category);
-    };
+      return flightReservations.value.filter(
+        (f) => f.ticketClass === selectedTicketClass.value
+      );
+    });
 
     return {
       flightReservations,

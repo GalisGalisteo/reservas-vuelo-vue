@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student names</title>
+    <title>Flights</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
         .first-class {
@@ -19,14 +19,17 @@
 <body>
     <main class="container" id="app">
         <h1>Reserva de vuelos</h1>
-        <article>
-            <p>Número del vuelo: QF123</p>
-            <p>Categoría: <span>Economy</span></p>
-            <p>Puerta de embarque: G3</p>
-            <p>Email de la reserva: bob.johnson@gmail.com </p>
-
-            <p>Vuelo cancelado ❌</p>
-            <p>Vuelo confirmado 👌</p>
+        <select name="categories" v-model="selectedTicketClass">
+            <option value="-1">Selecciona la categoria</option>
+            <option v-for="f in fligthCategories" :value="f">{{ f }}</option>
+        </select>
+        <article v-for="f in filteredFligths(selectedTicketClass)">
+            <p>Número del vuelo: {{f.flightNumber}}</p>
+            <p :class="{'first-class': f.ticketClass === 'First Class'}">Categoría: {{f.ticketClass}}</p>
+            <p>Puerta de embarque: {{f.gate}}</p>
+            <p>Email de la reserva: {{f.passenger.contactInfo.email}} </p>
+            <p v-show="f.isCancelled">Vuelo cancelado ❌</p>
+            <p v-show="f.isConfirmed">Vuelo confirmado 👌</p>
         </article>
 
     </main>

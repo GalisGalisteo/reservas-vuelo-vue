@@ -302,9 +302,26 @@ createApp({
         gate: "G3",
       },
     ]);
+    const selectedTicketClass = ref("-1");
+
+    const fligthCategories = computed(() => {
+      const flightMap = flightReservations.value.map((f) => f.ticketClass);
+      const flightSet = new Set(flightMap);
+      return Array.from(flightSet);
+    });
+
+    const filteredFligths = (category) => {
+      if (category == -1) {
+        return flightReservations.value;
+      }
+      return flightReservations.value.filter((f) => f.ticketClass === category);
+    };
 
     return {
       flightReservations,
+      selectedTicketClass,
+      fligthCategories,
+      filteredFligths,
     };
   },
 }).mount("#app");
